@@ -5,7 +5,7 @@ from dash.dependencies import Input, Output, State
 
 
 ########### Define your variables ######
-myheading1='Predicting Home Sale Prices in Ames, Iowa'
+myheading1='Predicting Home Sale Prices in Ames, Iowa by AlexChicote'
 image1='ames_welcome.jpeg'
 tabtitle = 'Ames Housing'
 sourceurl = 'http://jse.amstat.org/v19n3/decock.pdf'
@@ -22,7 +22,7 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1(myheading1),
     html.Div([
-        html.Img(src=app.get_asset_url(image1), style={'width': '30%', 'height': 'auto'}, className='four columns'),
+        html.Img(src=app.get_asset_url(image1), style={'width': '30%', 'height': 'auto'}, className='five columns'),
         html.Div([
                 html.H3('Features of Home:'),
                 html.Div('Year Built:'),
@@ -37,20 +37,22 @@ app.layout = html.Div(children=[
                 dcc.Input(id='SingleFam', value=0, type='number', min=0, max=1, step=1),
                 html.Div('Large Neighborhood:'),
                 dcc.Input(id='LargeNeighborhood', value=0, type='number', min=0, max=1, step=1),
+                html.Div('Full Bath:'),
+                dcc.Input(id='FullBath', value=0, type='number', min=0, max=3, step=1),
 
             ], className='four columns'),
             html.Div([
                 html.Button(children='Submit', id='submit-val', n_clicks=0,
                                 style={
-                                'background-color': 'red',
-                                'color': 'white',
+                                'background-color': 'green',
+                                'color': 'black',
                                 'margin-left': '5px',
                                 'verticalAlign': 'center',
                                 'horizontalAlign': 'center'}
                                 ),
                 html.H3('Predicted Home Value:'),
                 html.Div(id='Results')
-            ], className='four columns')
+            ], className='five columns')
         ], className='twelve columns',
     ),
     html.Br(),
@@ -77,14 +79,14 @@ app.layout = html.Div(children=[
     State(component_id='BedroomAbvGr', component_property='value'),
     State(component_id='TotalSF', component_property='value'),
     State(component_id='SingleFam', component_property='value'),
-    State(component_id='LargeNeighborhood', component_property='value')
-
+    State(component_id='LargeNeighborhood', component_property='value'),
+    State(component_id='FullBath', component_property='value')
 )
-def ames_lr_function(clicks, YearBuilt,Bathrooms,BedroomAbvGr,TotalSF,SingleFam,LargeNeighborhood):
+def ames_lr_function(clicks, YearBuilt,Bathrooms,BedroomAbvGr,TotalSF,SingleFam,LargeNeighborhood,FullBath):
     if clicks==0:
         return "waiting for inputs"
     else:
-        y = [-1360501.3809 + 704.4287*YearBuilt + 12738.4775*Bathrooms + -7783.1712*BedroomAbvGr + 49.824*TotalSF+ 25282.091*SingleFam+ -6637.2636*LargeNeighborhood]
+        y = [-1360501.3809 + 704.4287*YearBuilt + 12738.4775*Bathrooms + -7783.1712*BedroomAbvGr + 49.824*TotalSF+ 25282.091*SingleFam+ -6637.2636*LargeNeighborhood+3108.9323*FullBath]
         formatted_y = "${:,.2f}".format(y[0])
         return formatted_y
 
