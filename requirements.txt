@@ -2,7 +2,7 @@
 
 # Minimum requirements for a plotly dash application
 Brotli==1.0.9
-click==8.0.3
+click==8.1.3
 dash==2.0.0
 dash-core-components==2.0.0
 dash-html-components==2.0.0
